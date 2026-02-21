@@ -13,9 +13,9 @@
   box-sizing:border-box;
   font-family:Arial, sans-serif;
 }
-body, html{
+html, body{
   height:100%;
-  overflow:hidden;
+  background:black; /* إذا ما فيه فيديو */
 }
 
 /* فيديو الخلفية */
@@ -23,33 +23,33 @@ video{
   position:fixed;
   top:0;
   left:0;
-  min-width:100%;
-  min-height:100%;
+  width:100%;
+  height:100%;
   object-fit:cover;
   z-index:-2;
 }
 
-/* طبقة تغميق */
+/* تغميق فوق الفيديو */
 .overlay{
   position:fixed;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.65);
   z-index:-1;
 }
 
-/* الكرت */
+/* الكرت الرئيسي */
 .card{
-  background:rgba(0,0,0,0.7);
-  padding:25px;
-  border-radius:20px;
+  background:rgba(0,0,0,0.8);
+  padding:40px;
+  border-radius:25px;
   width:90%;
-  max-width:340px;
+  max-width:420px;
   text-align:center;
   color:white;
-  box-shadow:0 0 25px #000;
+  box-shadow:0 0 40px black;
   position:absolute;
   top:50%;
   left:50%;
@@ -57,34 +57,37 @@ video{
 }
 
 .card img{
-  width:120px;
-  height:120px;
+  width:160px;
+  height:160px;
   border-radius:50%;
-  border:3px solid white;
+  border:4px solid white;
   object-fit:cover;
 }
 
 .card h2{
-  margin-top:10px;
+  margin-top:15px;
+  font-size:32px;
 }
 
 .card p{
   color:#ccc;
-  margin-bottom:15px;
+  margin:10px 0 25px;
+  font-size:20px;
 }
 
 .links a{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
-  margin:10px 0;
-  padding:12px;
+  gap:12px;
+  margin:15px 0;
+  padding:16px;
   background:white;
   color:black;
-  border-radius:12px;
+  border-radius:15px;
   text-decoration:none;
   font-weight:bold;
+  font-size:18px;
   transition:0.2s;
 }
 
@@ -92,34 +95,53 @@ video{
   background:#ddd;
 }
 
+/* زر نسخ الديسكورد */
+.copy-btn{
+  margin-top:15px;
+  padding:14px;
+  width:100%;
+  border:none;
+  border-radius:15px;
+  font-size:18px;
+  cursor:pointer;
+  background:#fff;
+  font-weight:bold;
+}
+
+#discordUser{
+  margin-top:10px;
+  color:#0f0;
+  font-size:16px;
+}
+
 /* زر الصوت */
 .sound-btn{
   position:fixed;
-  bottom:15px;
-  right:15px;
-  font-size:26px;
+  bottom:20px;
+  right:20px;
+  font-size:30px;
   background:black;
   color:white;
   border:none;
   border-radius:50%;
-  width:50px;
-  height:50px;
+  width:60px;
+  height:60px;
   cursor:pointer;
-  box-shadow:0 0 10px black;
+  box-shadow:0 0 15px black;
 }
 </style>
 </head>
 <body>
 
-<!-- فيديو الخلفية (بدون صوت) -->
+<!-- فيديو الخلفية (لو موجود) -->
 <video autoplay loop muted playsinline>
   <source src="background.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- موسيقى (اختياري) -->
-<audio id="bgMusic" loop>
+<!-- الموسيقى تشتغل تلقائي -->
+<audio id="bgMusic" autoplay loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
@@ -127,16 +149,17 @@ video{
   <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
 
   <h2>lryxar</h2>
-  <p> مهموم</p>
+  <p>مهموم</p>
 
   <div class="links">
-    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> l19r</a>
     <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
     <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
   </div>
+
+  <button class="copy-btn" onclick="copyDiscord()">📋 نسخ يوزر الديسكورد</button>
+  <div id="discordUser"></div>
 </div>
 
-<!-- زر تشغيل/إيقاف الموسيقى -->
 <button class="sound-btn" onclick="toggleMusic()">🎵</button>
 
 <script>
@@ -147,6 +170,12 @@ function toggleMusic(){
   }else{
     music.pause();
   }
+}
+
+function copyDiscord(){
+  let user = "l19r";
+  navigator.clipboard.writeText(user);
+  document.getElementById("discordUser").innerText = "تم نسخ اليوزر: " + user;
 }
 </script>
 
