@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <title>lryxar.com</title>
@@ -37,43 +37,51 @@ video{
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.65);
+  background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85));
   z-index:-1;
 }
 
 /* Card */
 .card{
   background:rgba(0,0,0,0.85);
-  padding:45px;
-  border-radius:28px;
+  padding:50px;
+  border-radius:30px;
   width:90%;
-  max-width:480px;
+  max-width:520px;
   text-align:center;
   color:white;
-  box-shadow:0 0 40px black;
+  box-shadow:0 0 50px black;
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%, -50%);
+  animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translate(-50%, -60%);}
+  to{opacity:1; transform:translate(-50%, -50%);}
 }
 
 .card img{
-  width:180px;
-  height:180px;
+  width:190px;
+  height:190px;
   border-radius:50%;
   border:4px solid white;
   object-fit:cover;
+  box-shadow:0 0 25px rgba(255,255,255,0.3);
 }
 
 .card h2{
-  margin-top:20px;
-  font-size:36px;
+  margin-top:22px;
+  font-size:38px;
+  letter-spacing:1px;
 }
 
 .card p{
   color:#ccc;
-  margin:12px 0 30px;
-  font-size:22px;
+  margin:14px 0 34px;
+  font-size:24px;
 }
 
 /* Links */
@@ -82,28 +90,145 @@ video{
   align-items:center;
   justify-content:center;
   gap:14px;
-  margin:16px 0;
-  padding:18px;
+  margin:18px 0;
+  padding:20px;
   background:white;
   color:black;
-  border-radius:18px;
+  border-radius:20px;
   text-decoration:none;
   font-weight:bold;
-  font-size:20px;
-  transition:0.2s;
+  font-size:21px;
+  transition:0.25s;
 }
 
 .links a:hover{
-  background:#ddd;
+  background:#e0e0e0;
+  transform:scale(1.02);
 }
 
 /* Copy Button */
 .copy-btn{
-  margin-top:20px;
-  padding:18px;
+  margin-top:22px;
+  padding:20px;
   width:100%;
   border:none;
-  border-radius:18px;
+  border-radius:20px;
+  font-size:20px;
+  cursor:pointer;
+  background:#fff;
+  font-weight:bold;
+  transition:0.25s;
+}
+
+.copy-btn:hover{
+  background:#e0e0e0;
+  transform:scale(1.02);
+}
+
+#discordUser{
+  margin-top:14px;
+  color:#00ff99;
+  font-size:18px;
+}
+
+/* Sound Button */
+.sound-btn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  font-size:22px;
+  background:black;
+  color:white;
+  border:none;
+  border-radius:12px;
+  padding:12px 16px;
+  cursor:pointer;
+  box-shadow:0 0 20px black;
+  transition:0.25s;
+}
+
+.sound-btn:hover{
+  background:#111;
+}
+
+/* Responsive */
+@media (max-width: 600px){
+  .card{
+    padding:34px;
+    max-width:380px;
+  }
+  .card img{
+    width:150px;
+    height:150px;
+  }
+  .card h2{
+    font-size:30px;
+  }
+  .card p{
+    font-size:20px;
+  }
+  .links a{
+    font-size:18px;
+    padding:15px;
+  }
+  .copy-btn{
+    font-size:18px;
+    padding:15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Video Background -->
+<video autoplay loop muted playsinline>
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- Background Music (auto play & loop) -->
+<audio id="bgMusic" autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
+
+  <h2>lryxar</h2>
+  <p>مهموم</p>
+
+  <div class="links">
+    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> Discord</a>
+    <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+    <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
+  </div>
+
+  <button class="copy-btn" onclick="copyDiscord()">Copy Discord Username</button>
+  <div id="discordUser"></div>
+</div>
+
+<button class="sound-btn" onclick="toggleMusic()">Sound</button>
+
+<script>
+function toggleMusic(){
+  let music = document.getElementById("bgMusic");
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+
+function copyDiscord(){
+  let user = "l19r";
+  navigator.clipboard.writeText(user);
+  document.getElementById("discordUser").innerText = "Copied: " + user;
+}
+</script>
+
+</body>
+</html>  border-radius:18px;
   font-size:20px;
   cursor:pointer;
   background:#fff;
