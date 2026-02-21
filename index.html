@@ -15,17 +15,7 @@ body{
   overflow:hidden;
 }
 
-/* فيديو الخلفية */
-video{
-  position:fixed;
-  top:0;left:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-2;
-}
-
-/* خلفية سوداء احتياط */
+/* خلفية احتياط */
 .overlay{
   position:fixed;
   top:0;left:0;
@@ -35,51 +25,14 @@ video{
   z-index:-3;
 }
 
-/* البطاقة */
-.card{
-  background:rgba(0,0,0,0.7);
-  padding:40px;
-  border-radius:25px;
-  width:90%;
-  max-width:420px;
-  text-align:center;
-  margin:auto;
-  margin-top:8vh;
-  box-shadow:0 0 30px black;
-}
-
-img{
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  border:4px solid white;
-  object-fit:cover;
-}
-
-h2{
-  margin:15px 0;
-  font-size:32px;
-}
-
-.links button,
-.links a{
-  display:block;
+/* فيديو الخلفية */
+video{
+  position:fixed;
+  top:0;left:0;
   width:100%;
-  margin:12px 0;
-  padding:16px;
-  font-size:20px;
-  background:white;
-  color:black;
-  border:none;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.links button:hover,
-.links a:hover{
-  background:#ddd;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
 }
 
 /* زر الصوت */
@@ -96,11 +49,60 @@ h2{
   cursor:pointer;
 }
 
-/* عداد الزيارات */
+/* البطاقة */
+.card{
+  background:rgba(0,0,0,0.75);
+  padding:45px;
+  border-radius:30px;
+  width:90%;
+  max-width:430px;
+  text-align:center;
+  margin:auto;
+  margin-top:7vh;
+  box-shadow:0 0 35px black;
+}
+
+img{
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  border:4px solid white;
+  object-fit:cover;
+}
+
+h2{
+  margin:15px 0;
+  font-size:34px;
+}
+
+.links button,
+.links a{
+  display:block;
+  width:100%;
+  margin:14px 0;
+  padding:18px;
+  font-size:22px;
+  background:white;
+  color:black;
+  border:none;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.links button:hover,
+.links a:hover{
+  background:#ddd;
+  transform:scale(1.03);
+}
+
+/* عداد */
 #counter{
-  margin-top:20px;
+  margin-top:22px;
   color:#aaa;
-  font-size:16px;
+  font-size:17px;
 }
 </style>
 </head>
@@ -110,7 +112,7 @@ h2{
 <div class="overlay"></div>
 
 <!-- فيديو الخلفية (اختياري) -->
-<video autoplay loop muted playsinline id="bgVideo">
+<video autoplay loop muted playsinline>
   <source src="background.mp4" type="video/mp4">
 </video>
 
@@ -128,7 +130,7 @@ h2{
 
   <div class="links">
     <button onclick="copyDiscord()">Copy Discord</button>
-    <a href="https://github.com/lryxar">GitHub</a>
+    <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2">TikTok</a>
     <a href="https://youtube.com/@lryxar">YouTube</a>
   </div>
 
@@ -153,7 +155,7 @@ btn.onclick = function(){
   }
 };
 
-/* حل مشكلة التشغيل التلقائي */
+/* تشغيل بعد أول لمسة */
 document.body.addEventListener("click", ()=>{
   if(!playing){
     audio.play();
