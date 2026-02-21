@@ -1,438 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <title>lryxar.com</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{
+*{box-sizing:border-box}
+body{
   margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
+  height:100vh;
+  font-family:Arial;
+  color:white;
+  overflow:hidden;
 }
 
-html, body{
-  height:100%;
-  background:black;
-}
-
-/* Video */
+/* فيديو الخلفية */
 video{
   position:fixed;
-  top:0;
-  left:0;
+  top:0;left:0;
   width:100%;
   height:100%;
   object-fit:cover;
   z-index:-2;
 }
 
-/* Overlay */
+/* خلفية سوداء احتياط */
 .overlay{
   position:fixed;
-  top:0;
-  left:0;
+  top:0;left:0;
   width:100%;
   height:100%;
-  background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85));
-  z-index:-1;
+  background:black;
+  z-index:-3;
 }
 
-/* Card */
+/* البطاقة */
 .card{
-  background:rgba(0,0,0,0.85);
-  padding:50px;
-  border-radius:30px;
+  background:rgba(0,0,0,0.7);
+  padding:40px;
+  border-radius:25px;
   width:90%;
-  max-width:520px;
+  max-width:420px;
   text-align:center;
-  color:white;
-  box-shadow:0 0 40px black;
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-  animation:fade 1.2s ease;
+  margin:auto;
+  margin-top:8vh;
+  box-shadow:0 0 30px black;
 }
 
-@keyframes fade{
-  from{opacity:0; transform:translate(-50%,-60%);}
-  to{opacity:1; transform:translate(-50%,-50%);}
-}
-
-.card img{
-  width:190px;
-  height:190px;
+img{
+  width:160px;
+  height:160px;
   border-radius:50%;
   border:4px solid white;
   object-fit:cover;
-  box-shadow:0 0 20px rgba(255,255,255,0.3);
 }
 
-.card h2{
-  margin-top:20px;
-  font-size:36px;
+h2{
+  margin:15px 0;
+  font-size:32px;
 }
 
-/* Links */
+.links button,
 .links a{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  margin:18px 0;
-  padding:20px;
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:16px;
+  font-size:20px;
   background:white;
   color:black;
-  border-radius:20px;
+  border:none;
+  border-radius:14px;
   text-decoration:none;
   font-weight:bold;
-  font-size:20px;
-  transition:0.2s;
+  cursor:pointer;
 }
 
+.links button:hover,
 .links a:hover{
-  background:#e0e0e0;
-  transform:scale(1.03);
+  background:#ddd;
 }
 
-/* Copy button */
-.copy-btn{
-  margin-top:20px;
-  padding:20px;
-  width:100%;
-  border:none;
-  border-radius:20px;
-  font-size:20px;
-  cursor:pointer;
-  background:#fff;
-  font-weight:bold;
-  transition:0.2s;
-}
-
-.copy-btn:hover{
-  background:#e0e0e0;
-}
-
-#discordUser{
-  margin-top:10px;
-  color:#00ff99;
-  font-size:18px;
-}
-
-/* Sound button */
-.sound-btn{
+/* زر الصوت */
+#audioBtn{
   position:fixed;
-  top:20px;
-  left:20px;
-  background:black;
-  color:white;
-  border:none;
-  border-radius:12px;
+  top:15px;
+  left:15px;
+  font-size:22px;
   padding:14px 18px;
+  border-radius:50px;
+  border:none;
+  background:white;
+  color:black;
   cursor:pointer;
-  box-shadow:0 0 15px black;
+}
+
+/* عداد الزيارات */
+#counter{
+  margin-top:20px;
+  color:#aaa;
   font-size:16px;
 }
-
-/* Responsive */
-@media(max-width:600px){
-  .card{padding:35px; max-width:380px;}
-  .card img{width:150px; height:150px;}
-  .card h2{font-size:28px;}
-  .links a{font-size:17px; padding:14px;}
-  .copy-btn{font-size:17px; padding:14px;}
-}
 </style>
 </head>
-<body>
 
-<video autoplay loop muted playsinline>
-  <source src="background.mp4" type="video/mp4">
-</video>
+<body>
 
 <div class="overlay"></div>
 
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<div class="card">
-  <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
-  <h2>lryxar</h2>
-
-  <div class="links">
-    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> Discord</a>
-    <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
-    <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
-  </div>
-
-  <button class="copy-btn" onclick="copyDiscord()">Copy Discord Username</button>
-  <div id="discordUser"></div>
-</div>
-
-<button class="sound-btn" onclick="toggleMusic()">Sound</button>
-
-<script>
-let music = document.getElementById("bgMusic");
-let started = false;
-
-/* تشغيل الموسيقى أول تفاعل */
-document.body.addEventListener("click", function(){
-  if(!started){
-    music.play();
-    started = true;
-  }
-});
-
-function toggleMusic(){
-  if(music.paused){
-    music.play();
-  }else{
-    music.pause();
-  }
-}
-
-function copyDiscord(){
-  let user = "l19r";
-  navigator.clipboard.writeText(user);
-  document.getElementById("discordUser").innerText = "Copied: " + user;
-}
-</script>
-
-</body>
-</html>  transform:scale(1.02);
-}
-
-/* Copy Button */
-.copy-btn{
-  margin-top:22px;
-  padding:20px;
-  width:100%;
-  border:none;
-  border-radius:20px;
-  font-size:20px;
-  cursor:pointer;
-  background:#fff;
-  font-weight:bold;
-  transition:0.25s;
-}
-
-.copy-btn:hover{
-  background:#e0e0e0;
-  transform:scale(1.02);
-}
-
-#discordUser{
-  margin-top:14px;
-  color:#00ff99;
-  font-size:18px;
-}
-
-/* Sound Button */
-.sound-btn{
-  position:fixed;
-  top:20px;
-  left:20px;
-  font-size:22px;
-  background:black;
-  color:white;
-  border:none;
-  border-radius:12px;
-  padding:12px 16px;
-  cursor:pointer;
-  box-shadow:0 0 20px black;
-  transition:0.25s;
-}
-
-.sound-btn:hover{
-  background:#111;
-}
-
-/* Responsive */
-@media (max-width: 600px){
-  .card{
-    padding:34px;
-    max-width:380px;
-  }
-  .card img{
-    width:150px;
-    height:150px;
-  }
-  .card h2{
-    font-size:30px;
-  }
-  .card p{
-    font-size:20px;
-  }
-  .links a{
-    font-size:18px;
-    padding:15px;
-  }
-  .copy-btn{
-    font-size:18px;
-    padding:15px;
-  }
-}
-</style>
-</head>
-<body>
-
-<!-- Video Background -->
-<video autoplay loop muted playsinline>
+<!-- فيديو الخلفية (اختياري) -->
+<video autoplay loop muted playsinline id="bgVideo">
   <source src="background.mp4" type="video/mp4">
 </video>
 
-<div class="overlay"></div>
-
-<!-- Background Music (auto play & loop) -->
-<audio id="bgMusic" autoplay loop>
+<!-- الموسيقى -->
+<audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card">
-  <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
-
-  <h2>lryxar</h2>
-  <p> </p>
-
-  <div class="links">
-    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> Discord</a>
-    <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
-    <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
-  </div>
-
-  <button class="copy-btn" onclick="copyDiscord()">Copy Discord Username</button>
-  <div id="discordUser"></div>
-</div>
-
-<button class="sound-btn" onclick="toggleMusic()">Sound</button>
-
-<script>
-function toggleMusic(){
-  let music = document.getElementById("bgMusic");
-  if(music.paused){
-    music.play();
-  }else{
-    music.pause();
-  }
-}
-
-function copyDiscord(){
-  let user = "l19r";
-  navigator.clipboard.writeText(user);
-  document.getElementById("discordUser").innerText = "Copied: " + user;
-}
-</script>
-
-</body>
-</html>  border-radius:18px;
-  font-size:20px;
-  cursor:pointer;
-  background:#fff;
-  font-weight:bold;
-}
-
-#discordUser{
-  margin-top:12px;
-  color:#00ff99;
-  font-size:18px;
-}
-
-/* Sound Button */
-.sound-btn{
-  position:fixed;
-  top:20px;
-  left:20px;
-  font-size:32px;
-  background:black;
-  color:white;
-  border:none;
-  border-radius:50%;
-  width:70px;
-  height:70px;
-  cursor:pointer;
-  box-shadow:0 0 20px black;
-}
-
-/* Responsive (Mobile) */
-@media (max-width: 600px){
-  .card{
-    padding:30px;
-    max-width:360px;
-  }
-  .card img{
-    width:140px;
-    height:140px;
-  }
-  .card h2{
-    font-size:28px;
-  }
-  .card p{
-    font-size:18px;
-  }
-  .links a{
-    font-size:17px;
-    padding:14px;
-  }
-  .copy-btn{
-    font-size:17px;
-    padding:14px;
-  }
-}
-</style>
-</head>
-<body>
-
-<!-- Video Background -->
-<video autoplay loop muted playsinline>
-  <source src="background.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
-
-<!-- Background Music -->
-<audio id="bgMusic" autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+<button id="audioBtn">Play</button>
 
 <div class="card">
-  <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
+  <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg">
 
   <h2>lryxar</h2>
-  <p>Sad & Tired</p>
 
   <div class="links">
-    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> Discord</a>
-    <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
-    <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
+    <button onclick="copyDiscord()">Copy Discord</button>
+    <a href="https://github.com/lryxar">GitHub</a>
+    <a href="https://youtube.com/@lryxar">YouTube</a>
   </div>
 
-  <button class="copy-btn" onclick="copyDiscord()">📋 Copy Discord Username</button>
-  <div id="discordUser"></div>
+  <div id="counter">Visits: 0</div>
 </div>
 
-<!-- Sound Button -->
-<button class="sound-btn" onclick="toggleMusic()">🎵</button>
-
 <script>
-function toggleMusic(){
-  let music = document.getElementById("bgMusic");
-  if(music.paused){
-    music.play();
+let audio = document.getElementById("music");
+let btn = document.getElementById("audioBtn");
+let playing = false;
+
+/* زر الصوت */
+btn.onclick = function(){
+  if(!playing){
+    audio.play();
+    btn.innerText="Mute";
+    playing=true;
   }else{
-    music.pause();
+    audio.pause();
+    btn.innerText="Play";
+    playing=false;
   }
+};
+
+/* حل مشكلة التشغيل التلقائي */
+document.body.addEventListener("click", ()=>{
+  if(!playing){
+    audio.play();
+    btn.innerText="Mute";
+    playing=true;
+  }
+},{once:true});
+
+/* نسخ ديسكورد */
+function copyDiscord(){
+  navigator.clipboard.writeText("l19r");
+  alert("Discord copied");
 }
 
-function copyDiscord(){
-  let user = "l19r";
-  navigator.clipboard.writeText(user);
-  document.getElementById("discordUser").innerText = "Copied: " + user;
+/* عداد زيارات */
+let visits = localStorage.getItem("visits");
+if(!visits){
+  visits=1;
+}else{
+  visits=parseInt(visits)+1;
 }
+localStorage.setItem("visits",visits);
+document.getElementById("counter").innerText="Visits: "+visits;
 </script>
 
 </body>
