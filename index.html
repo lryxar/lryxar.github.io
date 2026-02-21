@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>lryxar</title>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
 body{
   margin:0;
@@ -54,13 +52,26 @@ p{
 .links a:hover{
   background:#ddd;
 }
+.sound-btn{
+  margin-top:15px;
+  padding:8px 15px;
+  border:none;
+  border-radius:10px;
+  background:white;
+  color:black;
+  cursor:pointer;
+}
 </style>
 </head>
-
 <body>
+
+<!-- موسيقى الخلفية -->
+<audio id="bgMusic" autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card">
   <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
-
   <h2>lryxar</h2>
   <p>لا حول ولا قوة إلا بالله العلي العظيم</p>
 
@@ -70,6 +81,20 @@ p{
     <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
     <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
   </div>
+
+  <button class="sound-btn" onclick="toggleMusic()">🎵 تشغيل / إيقاف الصوت</button>
 </div>
+
+<script>
+function toggleMusic(){
+  let music = document.getElementById("bgMusic");
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+</script>
+
 </body>
 </html>
