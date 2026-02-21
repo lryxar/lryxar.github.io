@@ -2,40 +2,77 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>lryxar</title>
+<title>lryxar.com</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-body{
+*{
   margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#000;
-  font-family:Arial;
-  color:white;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
 }
+body, html{
+  height:100%;
+  overflow:hidden;
+}
+
+/* فيديو الخلفية */
+video{
+  position:fixed;
+  top:0;
+  left:0;
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+
+/* طبقة تغميق */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+/* الكرت */
 .card{
-  background:#111;
-  padding:30px;
+  background:rgba(0,0,0,0.7);
+  padding:25px;
   border-radius:20px;
-  width:320px;
+  width:90%;
+  max-width:340px;
   text-align:center;
-  box-shadow:0 0 20px #333;
+  color:white;
+  box-shadow:0 0 25px #000;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
 }
-img{
+
+.card img{
   width:120px;
   height:120px;
   border-radius:50%;
   border:3px solid white;
   object-fit:cover;
 }
-h2{
-  margin:10px 0 5px 0;
+
+.card h2{
+  margin-top:10px;
 }
-p{
-  color:#aaa;
+
+.card p{
+  color:#ccc;
+  margin-bottom:15px;
 }
+
 .links a{
   display:flex;
   align-items:center;
@@ -48,42 +85,59 @@ p{
   border-radius:12px;
   text-decoration:none;
   font-weight:bold;
+  transition:0.2s;
 }
+
 .links a:hover{
   background:#ddd;
 }
+
+/* زر الصوت */
 .sound-btn{
-  margin-top:15px;
-  padding:8px 15px;
+  position:fixed;
+  bottom:15px;
+  right:15px;
+  font-size:26px;
+  background:black;
+  color:white;
   border:none;
-  border-radius:10px;
-  background:white;
-  color:black;
+  border-radius:50%;
+  width:50px;
+  height:50px;
   cursor:pointer;
+  box-shadow:0 0 10px black;
 }
 </style>
 </head>
 <body>
 
-<!-- موسيقى الخلفية -->
-<audio id="bgMusic" autoplay loop>
+<!-- فيديو الخلفية (بدون صوت) -->
+<video autoplay loop muted playsinline>
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- موسيقى (اختياري) -->
+<audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card">
   <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
+
   <h2>lryxar</h2>
-  <p>مهموم </p>
+  <p> مهموم</p>
 
   <div class="links">
-    <a href="https://github.com/lryxar"><i class="fa-brands fa-github"></i> GitHub</a>
-    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> Discord</a>
+    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> l19r</a>
     <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
     <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
   </div>
-
-  <button class="sound-btn" onclick="toggleMusic()">🎵 تشغيل / إيقاف الصوت</button>
 </div>
+
+<!-- زر تشغيل/إيقاف الموسيقى -->
+<button class="sound-btn" onclick="toggleMusic()">🎵</button>
 
 <script>
 function toggleMusic(){
