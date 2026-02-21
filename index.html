@@ -33,19 +33,20 @@ video{
   z-index:-2;
 }
 
-/* زر الصوت */
+/* زر الصوت (فوق كل شيء) */
 #audioBtn{
   position:fixed;
   top:15px;
   left:15px;
-  padding:10px 16px;
+  padding:10px 18px;
   border-radius:25px;
   border:none;
   background:white;
   color:black;
   font-size:16px;
   cursor:pointer;
-  opacity:0.85;
+  z-index:9999;
+  opacity:0.9;
 }
 
 /* الكرت */
@@ -80,6 +81,37 @@ h2{
   margin:12px 0;
   font-size:30px;
   letter-spacing:2px;
+  position:relative;
+}
+
+/* Glitch effect */
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+  overflow:hidden;
+}
+
+.glitch::before{
+  top:-2px;
+  color:red;
+  animation:glitch1 0.2s infinite linear alternate-reverse;
+}
+.glitch::after{
+  top:2px;
+  color:cyan;
+  animation:glitch2 0.2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch1{
+  0%{clip-path:inset(0 0 80% 0)}
+  100%{clip-path:inset(40% 0 20% 0)}
+}
+@keyframes glitch2{
+  0%{clip-path:inset(60% 0 10% 0)}
+  100%{clip-path:inset(10% 0 60% 0)}
 }
 
 /* الروابط */
@@ -103,14 +135,12 @@ h2{
 .links button:hover,
 .links a:hover{
   background:#ddd;
-  transform:scale(1.04);
+  transform:scale(1.05);
 }
 
 /* للجوال */
 @media(max-width:480px){
-  .card{
-    margin-top:12vh;
-  }
+  .card{margin-top:12vh}
   h2{font-size:26px}
 }
 </style>
@@ -135,7 +165,7 @@ h2{
 <div class="card">
   <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg">
 
-  <h2>lryxar</h2>
+  <h2 id="name" data-text="lryxar">lryxar</h2>
 
   <div class="links">
     <button onclick="copyDiscord()">Copy Discord</button>
@@ -148,6 +178,7 @@ h2{
 let audio = document.getElementById("music");
 let btn = document.getElementById("audioBtn");
 let playing = false;
+let nameText = document.getElementById("name");
 
 /* زر الصوت */
 btn.onclick = function(){
@@ -162,7 +193,7 @@ btn.onclick = function(){
   }
 };
 
-/* تشغيل تلقائي بعد أول لمسة */
+/* تشغيل بعد أول لمسة */
 document.body.addEventListener("click", ()=>{
   if(!playing){
     audio.play();
@@ -176,6 +207,20 @@ function copyDiscord(){
   navigator.clipboard.writeText("l19r");
   alert("Discord copied");
 }
+
+/* Glitch أول 3 ثواني */
+nameText.classList.add("glitch");
+setTimeout(()=>{
+  nameText.classList.remove("glitch");
+},3000);
+
+/* Glitch كل 10 ثواني لمدة ثانية */
+setInterval(()=>{
+  nameText.classList.add("glitch");
+  setTimeout(()=>{
+    nameText.classList.remove("glitch");
+  },1000);
+},10000);
 </script>
 
 </body>
