@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>lryxar.com</title>
@@ -13,12 +13,13 @@
   box-sizing:border-box;
   font-family:Arial, sans-serif;
 }
+
 html, body{
   height:100%;
-  background:black; /* إذا ما فيه فيديو */
+  background:black;
 }
 
-/* فيديو الخلفية */
+/* Video Background */
 video{
   position:fixed;
   top:0;
@@ -29,7 +30,7 @@ video{
   z-index:-2;
 }
 
-/* تغميق فوق الفيديو */
+/* Overlay */
 .overlay{
   position:fixed;
   top:0;
@@ -40,13 +41,13 @@ video{
   z-index:-1;
 }
 
-/* الكرت الرئيسي */
+/* Card */
 .card{
-  background:rgba(0,0,0,0.8);
-  padding:40px;
-  border-radius:25px;
+  background:rgba(0,0,0,0.85);
+  padding:45px;
+  border-radius:28px;
   width:90%;
-  max-width:420px;
+  max-width:480px;
   text-align:center;
   color:white;
   box-shadow:0 0 40px black;
@@ -57,37 +58,38 @@ video{
 }
 
 .card img{
-  width:160px;
-  height:160px;
+  width:180px;
+  height:180px;
   border-radius:50%;
   border:4px solid white;
   object-fit:cover;
 }
 
 .card h2{
-  margin-top:15px;
-  font-size:32px;
+  margin-top:20px;
+  font-size:36px;
 }
 
 .card p{
   color:#ccc;
-  margin:10px 0 25px;
-  font-size:20px;
+  margin:12px 0 30px;
+  font-size:22px;
 }
 
+/* Links */
 .links a{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:12px;
-  margin:15px 0;
-  padding:16px;
+  gap:14px;
+  margin:16px 0;
+  padding:18px;
   background:white;
   color:black;
-  border-radius:15px;
+  border-radius:18px;
   text-decoration:none;
   font-weight:bold;
-  font-size:18px;
+  font-size:20px;
   transition:0.2s;
 }
 
@@ -95,52 +97,78 @@ video{
   background:#ddd;
 }
 
-/* زر نسخ الديسكورد */
+/* Copy Button */
 .copy-btn{
-  margin-top:15px;
-  padding:14px;
+  margin-top:20px;
+  padding:18px;
   width:100%;
   border:none;
-  border-radius:15px;
-  font-size:18px;
+  border-radius:18px;
+  font-size:20px;
   cursor:pointer;
   background:#fff;
   font-weight:bold;
 }
 
 #discordUser{
-  margin-top:10px;
-  color:#0f0;
-  font-size:16px;
+  margin-top:12px;
+  color:#00ff99;
+  font-size:18px;
 }
 
-/* زر الصوت */
+/* Sound Button */
 .sound-btn{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  font-size:30px;
+  top:20px;
+  left:20px;
+  font-size:32px;
   background:black;
   color:white;
   border:none;
   border-radius:50%;
-  width:60px;
-  height:60px;
+  width:70px;
+  height:70px;
   cursor:pointer;
-  box-shadow:0 0 15px black;
+  box-shadow:0 0 20px black;
+}
+
+/* Responsive (Mobile) */
+@media (max-width: 600px){
+  .card{
+    padding:30px;
+    max-width:360px;
+  }
+  .card img{
+    width:140px;
+    height:140px;
+  }
+  .card h2{
+    font-size:28px;
+  }
+  .card p{
+    font-size:18px;
+  }
+  .links a{
+    font-size:17px;
+    padding:14px;
+  }
+  .copy-btn{
+    font-size:17px;
+    padding:14px;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- فيديو الخلفية (لو موجود) -->
+<!-- Video Background -->
 <video autoplay loop muted playsinline>
   <source src="background.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- الموسيقى تشتغل تلقائي -->
+<!-- Background Music -->
 <audio id="bgMusic" autoplay loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -149,17 +177,19 @@ video{
   <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg" alt="me">
 
   <h2>lryxar</h2>
-  <p>مهموم</p>
+  <p>Sad & Tired</p>
 
   <div class="links">
+    <a href="https://discord.com/users/l19r"><i class="fa-brands fa-discord"></i> Discord</a>
     <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2"><i class="fa-brands fa-tiktok"></i> TikTok</a>
     <a href="https://youtube.com/@lryxar"><i class="fa-brands fa-youtube"></i> YouTube</a>
   </div>
 
-  <button class="copy-btn" onclick="copyDiscord()">📋 نسخ يوزر الديسكورد</button>
+  <button class="copy-btn" onclick="copyDiscord()">📋 Copy Discord Username</button>
   <div id="discordUser"></div>
 </div>
 
+<!-- Sound Button -->
 <button class="sound-btn" onclick="toggleMusic()">🎵</button>
 
 <script>
@@ -175,7 +205,7 @@ function toggleMusic(){
 function copyDiscord(){
   let user = "l19r";
   navigator.clipboard.writeText(user);
-  document.getElementById("discordUser").innerText = "تم نسخ اليوزر: " + user;
+  document.getElementById("discordUser").innerText = "Copied: " + user;
 }
 </script>
 
