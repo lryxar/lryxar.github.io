@@ -1,227 +1,336 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>lryxar.com</title>
+<title>lryxar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root{
+  --bg:#000000;
+  --bg-soft:#0a0a0f;
+  --text:#f5f7ff;
+  --line:rgba(255,255,255,.18);
+  --glass:rgba(7, 7, 10, 0.72);
+  --shine:#84a7ff;
+}
 *{box-sizing:border-box}
+html,body{height:100%}
 body{
   margin:0;
-  height:100vh;
-  font-family:Arial;
-  color:white;
+  font-family:"Inter","Segoe UI",Arial,sans-serif;
+  color:var(--text);
   overflow:hidden;
+  background:radial-gradient(circle at 50% 10%, #11131a 0%, var(--bg) 58%);
 }
 
-/* خلفية سوداء احتياط */
 .overlay{
   position:fixed;
   inset:0;
-  background:black;
+  background:radial-gradient(circle at center, rgba(255,255,255,.03), rgba(0,0,0,.78));
   z-index:-3;
 }
 
-/* فيديو الخلفية */
 video{
   position:fixed;
   inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
-  z-index:-2;
+  z-index:-5;
+  filter:saturate(.25) contrast(1.12) brightness(.28);
 }
 
-/* زر الصوت (فوق كل شيء) */
+.vignette,
+.noise,
+.grid,
+.beam{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.vignette{
+  z-index:-4;
+  box-shadow:inset 0 0 200px rgba(0,0,0,.9);
+}
+
+.noise{
+  z-index:-2;
+  opacity:.16;
+  mix-blend-mode:soft-light;
+  background-image: radial-gradient(rgba(255,255,255,.4) .8px, transparent 1px);
+  background-size:3px 3px;
+}
+
+.grid{
+  z-index:-2;
+  background:
+    linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 76%);
+  opacity:.35;
+}
+
+.beam{
+  z-index:-1;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(132,167,255,.25), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,.1), transparent 40%);
+  animation:beamShift 10s ease-in-out infinite alternate;
+}
+
+@keyframes beamShift{
+  from{transform:translateY(-8px)}
+  to{transform:translateY(8px)}
+}
+
 #audioBtn{
   position:fixed;
-  top:15px;
-  left:15px;
-  padding:10px 18px;
-  border-radius:25px;
-  border:none;
-  background:white;
-  color:black;
-  font-size:16px;
+  top:16px;
+  left:16px;
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  color:white;
+  background:rgba(10,10,14,.75);
+  font-size:14px;
+  font-weight:700;
   cursor:pointer;
-  z-index:9999;
-  opacity:0.9;
+  z-index:1000;
+  box-shadow:0 0 22px rgba(132,167,255,.23);
+  transition:.25s transform,.25s filter,.25s box-shadow;
 }
 
-/* الكرت */
+#audioBtn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.12);
+  box-shadow:0 0 28px rgba(132,167,255,.35);
+}
+
+.wrapper{
+  min-height:100%;
+  display:grid;
+  place-items:center;
+  padding:22px;
+}
+
 .card{
-  background:rgba(0,0,0,0.65);
-  backdrop-filter: blur(6px);
-  padding:35px 25px;
-  border-radius:28px;
-  width:90%;
-  max-width:380px;
+  width:min(94vw, 420px);
   text-align:center;
-  margin:auto;
-  margin-top:8vh;
-  box-shadow:0 0 40px rgba(0,0,0,0.8);
-  animation:fadeIn 1.5s ease;
+  padding:34px 24px 24px;
+  border-radius:28px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.65),
+    0 0 50px rgba(132,167,255,.16),
+    inset 0 1px 0 rgba(255,255,255,.08);
+  transform-style:preserve-3d;
+  animation:cardEnter 1s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+  overflow:hidden;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(30px)}
-  to{opacity:1; transform:translateY(0)}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(125deg, transparent 20%, rgba(255,255,255,.06) 48%, transparent 75%);
+  transform:translateX(-120%);
+  animation:sweep 4.5s ease-in-out infinite;
 }
 
-img{
-  width:140px;
-  height:140px;
+@keyframes sweep{
+  0%,55%{transform:translateX(-120%)}
+  100%{transform:translateX(130%)}
+}
+
+@keyframes cardEnter{
+  from{opacity:0; transform:translateY(38px) scale(.96)}
+  to{opacity:1; transform:translateY(0) scale(1)}
+}
+
+.avatar-wrap{
+  width:146px;
+  height:146px;
+  margin:0 auto 16px;
   border-radius:50%;
-  border:3px solid white;
-  object-fit:cover;
+  padding:4px;
+  background:conic-gradient(from 50deg, #fff, #84a7ff, #d4e0ff, #fff);
+  animation:spin 6s linear infinite;
 }
 
-h2{
-  margin:12px 0;
-  font-size:30px;
-  letter-spacing:2px;
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.avatar-wrap img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.86);
+  object-fit:cover;
+  animation:counterSpin 6s linear infinite;
+}
+
+@keyframes counterSpin{to{transform:rotate(-360deg)}}
+
+h1{
+  margin:2px 0 16px;
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:0 0 16px rgba(132,167,255,.9);
   position:relative;
 }
 
-/* Glitch effect */
 .glitch::before,
 .glitch::after{
   content:attr(data-text);
   position:absolute;
-  left:0;
-  width:100%;
-  overflow:hidden;
+  inset:0;
+  pointer-events:none;
+}
+.glitch::before{color:#9dc6ff; transform:translate(2px,-1px); clip-path:inset(0 0 50% 0)}
+.glitch::after{color:#ffffff; transform:translate(-2px,1px); clip-path:inset(50% 0 0 0)}
+
+.links{
+  display:grid;
+  gap:10px;
+  position:relative;
+  z-index:2;
 }
 
-.glitch::before{
-  top:-2px;
-  color:red;
-  animation:glitch1 0.2s infinite linear alternate-reverse;
-}
-.glitch::after{
-  top:2px;
-  color:cyan;
-  animation:glitch2 0.2s infinite linear alternate-reverse;
-}
-
-@keyframes glitch1{
-  0%{clip-path:inset(0 0 80% 0)}
-  100%{clip-path:inset(40% 0 20% 0)}
-}
-@keyframes glitch2{
-  0%{clip-path:inset(60% 0 10% 0)}
-  100%{clip-path:inset(10% 0 60% 0)}
-}
-
-/* الروابط */
 .links button,
 .links a{
-  display:block;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
   width:100%;
-  margin:10px 0;
   padding:12px;
-  font-size:17px;
-  background:white;
-  color:black;
-  border:none;
-  border-radius:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.2);
   text-decoration:none;
-  font-weight:bold;
+  font-weight:700;
+  font-size:15px;
+  color:white;
+  background:linear-gradient(135deg, rgba(255,255,255,.12), rgba(132,167,255,.12));
+  transition:transform .2s, filter .2s, box-shadow .2s;
   cursor:pointer;
-  transition:0.25s;
 }
 
 .links button:hover,
 .links a:hover{
-  background:#ddd;
-  transform:scale(1.05);
+  transform:translateY(-2px) scale(1.01);
+  filter:brightness(1.18);
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
 }
 
-/* للجوال */
-@media(max-width:480px){
-  .card{margin-top:12vh}
-  h2{font-size:26px}
+.hint{
+  margin-top:14px;
+  font-size:12px;
+  opacity:.72;
+  letter-spacing:.2px;
+}
+
+@media (max-width:480px){
+  h1{font-size:30px}
+  .card{padding:28px 18px 20px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="overlay"></div>
+<div class="vignette"></div>
+<div class="noise"></div>
+<div class="grid"></div>
+<div class="beam"></div>
 
-<!-- فيديو الخلفية (اختياري) -->
 <video autoplay loop muted playsinline>
   <source src="background.mp4" type="video/mp4">
 </video>
 
-<!-- الموسيقى -->
 <audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<button id="audioBtn">Play</button>
+<button id="audioBtn">Play Sound</button>
 
-<div class="card">
-  <img src="https://raw.githubusercontent.com/lryxar/lryxar.github.io/main/Picsart_26-02-21_21-24-14-975.jpg">
+<main class="wrapper">
+  <section class="card" id="card">
+    <div class="avatar-wrap">
+      <img src="Picsart_26-02-21_21-24-14-975.jpg" alt="lryxar avatar">
+    </div>
 
-  <h2 id="name" data-text="lryxar">lryxar</h2>
+    <h1 id="name" data-text="lryxar">lryxar</h1>
 
-  <div class="links">
-    <button onclick="copyDiscord()">Copy Discord</button>
-    <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2">TikTok</a>
-    <a href="https://youtube.com/@lryxar">YouTube</a>
-  </div>
-</div>
+    <div class="links">
+      <button id="copyBtn" onclick="copyDiscord()">🧩 Copy Discord: l19r</button>
+      <a href="https://tiktok.com/@mmmmmmm.mmmmmmmmmmmmmmm2" target="_blank" rel="noopener">🎬 TikTok</a>
+      <a href="https://youtube.com/@lryxar" target="_blank" rel="noopener">▶️ YouTube</a>
+    </div>
+
+    <p class="hint">Click anywhere once to auto-start the music.</p>
+  </section>
+</main>
 
 <script>
-let audio = document.getElementById("music");
-let btn = document.getElementById("audioBtn");
+const audio = document.getElementById("music");
+const btn = document.getElementById("audioBtn");
+const nameText = document.getElementById("name");
+const copyBtn = document.getElementById("copyBtn");
+const card = document.getElementById("card");
 let playing = false;
-let nameText = document.getElementById("name");
 
-/* زر الصوت */
-btn.onclick = function(){
+btn.addEventListener("click", toggleAudio);
+
+document.body.addEventListener("click", () => {
+  if(!playing) toggleAudio();
+}, { once: true });
+
+function toggleAudio(){
   if(!playing){
-    audio.play();
-    btn.innerText="Mute";
-    playing=true;
+    audio.play().then(() => {
+      btn.textContent = "Mute Sound";
+      playing = true;
+    }).catch(() => {
+      btn.textContent = "Tap to Play";
+    });
   }else{
     audio.pause();
-    btn.innerText="Play";
-    playing=false;
+    btn.textContent = "Play Sound";
+    playing = false;
   }
-};
-
-/* تشغيل بعد أول لمسة */
-document.body.addEventListener("click", ()=>{
-  if(!playing){
-    audio.play();
-    btn.innerText="Mute";
-    playing=true;
-  }
-},{once:true});
-
-/* نسخ ديسكورد */
-function copyDiscord(){
-  navigator.clipboard.writeText("l19r");
-  alert("Discord copied");
 }
 
-/* Glitch أول 3 ثواني */
-nameText.classList.add("glitch");
-setTimeout(()=>{
-  nameText.classList.remove("glitch");
-},3000);
+function copyDiscord(){
+  navigator.clipboard.writeText("l19r");
+  copyBtn.textContent = "✅ Discord Copied";
+  setTimeout(() => {
+    copyBtn.textContent = "🧩 Copy Discord: l19r";
+  }, 1700);
+}
 
-/* Glitch كل 10 ثواني لمدة ثانية */
-setInterval(()=>{
+function glitchPulse(){
   nameText.classList.add("glitch");
-  setTimeout(()=>{
-    nameText.classList.remove("glitch");
-  },1000);
-},10000);
-</script>
+  setTimeout(() => nameText.classList.remove("glitch"), 900);
+}
 
+glitchPulse();
+setInterval(glitchPulse, 8000);
+
+window.addEventListener("mousemove", (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 8;
+  const y = (e.clientY / window.innerHeight - 0.5) * -8;
+  card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+window.addEventListener("mouseleave", () => {
+  card.style.transform = "rotateY(0deg) rotateX(0deg)";
+});
+</script>
 </body>
 </html>
