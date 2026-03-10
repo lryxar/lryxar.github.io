@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,22 +8,34 @@
 
 <title>lryxar</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
 body{
-background:#000;
-color:#fff;
-font-family:'Orbitron',sans-serif;
+margin:0;
+background:black;
+color:white;
+font-family:Arial;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-margin:0;
 overflow:hidden;
+}
+
+/* intro */
+
+#intro{
+position:fixed;
+background:black;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+z-index:5;
 }
 
 /* النجوم */
@@ -31,13 +44,15 @@ overflow:hidden;
 position:fixed;
 width:100%;
 height:100%;
-background-image:
-radial-gradient(white 1px, transparent 1px),
-radial-gradient(white 1px, transparent 1px),
-radial-gradient(white 1px, transparent 1px);
-background-size:120px 120px;
-opacity:0.4;
+background:url("https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/starfield.png");
+animation:starsMove 200s linear infinite;
+opacity:0.6;
 z-index:-1;
+}
+
+@keyframes starsMove{
+from{background-position:0 0;}
+to{background-position:8000px 4000px;}
 }
 
 /* البطاقة */
@@ -48,13 +63,7 @@ padding:25px;
 border-radius:18px;
 text-align:center;
 width:250px;
-box-shadow:0 0 40px rgba(255,255,255,0.15);
-animation:fade 1.5s;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1}
+box-shadow:0 0 30px rgba(255,255,255,0.15);
 }
 
 /* الصورة */
@@ -64,27 +73,43 @@ width:85px;
 height:85px;
 border-radius:50%;
 border:2px solid white;
-box-shadow:0 0 15px white;
+box-shadow:0 0 10px white;
 margin-bottom:10px;
 }
 
-/* الاسم */
+/* اسم glitch */
 
 .name{
-font-size:24px;
-font-weight:700;
-margin-bottom:5px;
-animation:glitch 1s;
+font-size:26px;
+font-weight:bold;
+position:relative;
 }
 
-/* glitch */
+.name::before,
+.name::after{
+content:"lryxar";
+position:absolute;
+left:0;
+opacity:0.7;
+}
 
-@keyframes glitch{
+.name::before{
+animation:glitch1 1s infinite;
+}
+
+.name::after{
+animation:glitch2 1s infinite;
+}
+
+@keyframes glitch1{
 0%{transform:translate(0)}
-20%{transform:translate(-2px,2px)}
-40%{transform:translate(2px,-2px)}
-60%{transform:translate(-1px,1px)}
-80%{transform:translate(1px,-1px)}
+50%{transform:translate(2px,-2px)}
+100%{transform:translate(0)}
+}
+
+@keyframes glitch2{
+0%{transform:translate(0)}
+50%{transform:translate(-2px,2px)}
 100%{transform:translate(0)}
 }
 
@@ -109,7 +134,7 @@ transition:0.25s;
 
 .link:hover{
 background:#222;
-transform:scale(1.07);
+transform:scale(1.05);
 box-shadow:0 0 10px white;
 }
 
@@ -123,13 +148,98 @@ font-size:11px;
 color:#bbb;
 }
 
-/* اشعار النسخ */
+/* الزوار */
 
-.copymsg{
-position:fixed;
-bottom:20px;
-background:#111;
-padding:8px 14px;
+.visitors{
+margin-top:10px;
+font-size:11px;
+color:#aaa;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="intro">Loading...</div>
+
+<div class="stars"></div>
+
+<div class="card">
+
+<img src="avatar.png" class="avatar">
+
+<div class="name">lryxar</div>
+
+<div class="bio">welcome to my page</div>
+
+<div class="link" onclick="copyDiscord()">
+<div class="app"><i class="fa-brands fa-discord"></i> Discord</div>
+<div class="user">@l19r</div>
+</div>
+
+<div class="link" onclick="openTiktok()">
+<div class="app"><i class="fa-brands fa-tiktok"></i> TikTok</div>
+<div class="user">@lryxar7</div>
+</div>
+
+<div class="link" onclick="openYoutube()">
+<div class="app"><i class="fa-brands fa-youtube"></i> YouTube</div>
+<div class="user">@lryxar</div>
+</div>
+
+<div class="link" onclick="openInstagram()">
+<div class="app"><i class="fa-brands fa-instagram"></i> Instagram</div>
+<div class="user">@t_2gq</div>
+</div>
+
+<div class="visitors" id="visits">
+Visitors: loading...
+</div>
+
+</div>
+
+<script>
+
+/* intro */
+
+setTimeout(()=>{
+document.getElementById("intro").style.display="none"
+},2000)
+
+/* discord copy */
+
+function copyDiscord(){
+navigator.clipboard.writeText("@l19r");
+}
+
+/* الروابط */
+
+function openTiktok(){
+window.open("https://www.tiktok.com/@lryxar7");
+}
+
+function openYoutube(){
+window.open("https://www.youtube.com/@lryxar");
+}
+
+function openInstagram(){
+window.open("https://www.instagram.com/t_2gq");
+}
+
+/* عداد الزوار */
+
+fetch('https://api.countapi.xyz/hit/lryxar/site')
+.then(res=>res.json())
+.then(res=>{
+document.getElementById("visits").innerText="Visitors: "+res.value
+})
+
+</script>
+
+</body>
+</html>padding:8px 14px;
 border-radius:8px;
 font-size:12px;
 display:none;
