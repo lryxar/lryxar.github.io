@@ -24,7 +24,7 @@ height:100vh;
 overflow:hidden;
 }
 
-/* intro */
+/* شاشة التحميل */
 
 #intro{
 position:fixed;
@@ -77,40 +77,11 @@ box-shadow:0 0 10px white;
 margin-bottom:10px;
 }
 
-/* اسم glitch */
+/* الاسم */
 
 .name{
 font-size:26px;
 font-weight:bold;
-position:relative;
-}
-
-.name::before,
-.name::after{
-content:"lryxar";
-position:absolute;
-left:0;
-opacity:0.7;
-}
-
-.name::before{
-animation:glitch1 1s infinite;
-}
-
-.name::after{
-animation:glitch2 1s infinite;
-}
-
-@keyframes glitch1{
-0%{transform:translate(0)}
-50%{transform:translate(2px,-2px)}
-100%{transform:translate(0)}
-}
-
-@keyframes glitch2{
-0%{transform:translate(0)}
-50%{transform:translate(-2px,2px)}
-100%{transform:translate(0)}
 }
 
 /* الوصف */
@@ -202,19 +173,13 @@ Visitors: loading...
 
 <script>
 
-/* intro */
-
 setTimeout(()=>{
 document.getElementById("intro").style.display="none"
 },2000)
 
-/* discord copy */
-
 function copyDiscord(){
 navigator.clipboard.writeText("@l19r");
 }
-
-/* الروابط */
 
 function openTiktok(){
 window.open("https://www.tiktok.com/@lryxar7");
@@ -227,87 +192,12 @@ window.open("https://www.youtube.com/@lryxar");
 function openInstagram(){
 window.open("https://www.instagram.com/t_2gq");
 }
-
-/* عداد الزوار */
 
 fetch('https://api.countapi.xyz/hit/lryxar/site')
 .then(res=>res.json())
 .then(res=>{
 document.getElementById("visits").innerText="Visitors: "+res.value
 })
-
-</script>
-
-</body>
-</html>padding:8px 14px;
-border-radius:8px;
-font-size:12px;
-display:none;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="stars"></div>
-
-<div class="card">
-
-<img src="avatar.png" class="avatar">
-
-<div class="name">lryxar</div>
-
-<div class="bio">
-welcome to my page
-</div>
-
-<div class="link" onclick="copyDiscord()">
-<div class="app"><i class="fa-brands fa-discord"></i> Discord</div>
-<div class="user">@l19r</div>
-</div>
-
-<div class="link" onclick="openTiktok()">
-<div class="app"><i class="fa-brands fa-tiktok"></i> TikTok</div>
-<div class="user">@lryxar7</div>
-</div>
-
-<div class="link" onclick="openYoutube()">
-<div class="app"><i class="fa-brands fa-youtube"></i> YouTube</div>
-<div class="user">@lryxar</div>
-</div>
-
-<div class="link" onclick="openInstagram()">
-<div class="app"><i class="fa-brands fa-instagram"></i> Instagram</div>
-<div class="user">@t_2gq</div>
-</div>
-
-</div>
-
-<div class="copymsg" id="copymsg">Copied</div>
-
-<script>
-
-function copyDiscord(){
-navigator.clipboard.writeText("@l19r");
-let msg=document.getElementById("copymsg");
-msg.style.display="block";
-setTimeout(()=>{msg.style.display="none"},1500);
-}
-
-function openTiktok(){
-window.open("https://www.tiktok.com/@lryxar7");
-}
-
-function openYoutube(){
-window.open("https://www.youtube.com/@lryxar");
-}
-
-function openInstagram(){
-window.open("https://www.instagram.com/t_2gq");
-}
-
-document.addEventListener("contextmenu", e => e.preventDefault());
 
 </script>
 
