@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>lryxar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -12,7 +16,7 @@
 body{
 background:#000;
 color:#fff;
-font-family:Arial;
+font-family:'Orbitron',sans-serif;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -21,35 +25,31 @@ margin:0;
 overflow:hidden;
 }
 
-/* glitch intro */
+/* النجوم */
 
-.glitch{
-position:absolute;
-top:40%;
-font-size:40px;
-font-weight:bold;
-animation:glitch 1.5s forwards;
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(white 1px, transparent 1px);
+background-size:120px 120px;
+opacity:0.4;
+z-index:-1;
 }
 
-@keyframes glitch{
-0%{opacity:1;transform:translate(0)}
-20%{transform:translate(-4px,3px)}
-40%{transform:translate(4px,-3px)}
-60%{transform:translate(-3px,2px)}
-80%{transform:translate(2px,-2px)}
-100%{opacity:0}
-}
-
-/* card */
+/* البطاقة */
 
 .card{
-background:#0a0a0a;
+background:#050505;
 padding:25px;
 border-radius:18px;
 text-align:center;
-width:260px;
-box-shadow:0 0 30px rgba(255,255,255,0.1);
-animation:fade 2s;
+width:250px;
+box-shadow:0 0 40px rgba(255,255,255,0.15);
+animation:fade 1.5s;
 }
 
 @keyframes fade{
@@ -57,24 +57,38 @@ from{opacity:0;transform:translateY(20px)}
 to{opacity:1}
 }
 
-/* avatar */
+/* الصورة */
 
 .avatar{
-width:80px;
-height:80px;
+width:85px;
+height:85px;
 border-radius:50%;
 border:2px solid white;
+box-shadow:0 0 15px white;
 margin-bottom:10px;
 }
 
-/* name */
+/* الاسم */
 
 .name{
-font-size:22px;
-font-weight:bold;
+font-size:24px;
+font-weight:700;
+margin-bottom:5px;
+animation:glitch 1s;
 }
 
-/* bio */
+/* glitch */
+
+@keyframes glitch{
+0%{transform:translate(0)}
+20%{transform:translate(-2px,2px)}
+40%{transform:translate(2px,-2px)}
+60%{transform:translate(-1px,1px)}
+80%{transform:translate(1px,-1px)}
+100%{transform:translate(0)}
+}
+
+/* الوصف */
 
 .bio{
 font-size:11px;
@@ -82,7 +96,7 @@ color:#aaa;
 margin-bottom:15px;
 }
 
-/* link boxes */
+/* الروابط */
 
 .link{
 background:#111;
@@ -95,21 +109,30 @@ transition:0.25s;
 
 .link:hover{
 background:#222;
-transform:scale(1.05);
+transform:scale(1.07);
+box-shadow:0 0 10px white;
 }
 
-/* app name */
-
 .app{
-font-size:14px;
+font-size:13px;
 font-weight:bold;
 }
 
-/* username */
-
 .user{
-font-size:12px;
+font-size:11px;
 color:#bbb;
+}
+
+/* اشعار النسخ */
+
+.copymsg{
+position:fixed;
+bottom:20px;
+background:#111;
+padding:8px 14px;
+border-radius:8px;
+font-size:12px;
+display:none;
 }
 
 </style>
@@ -117,7 +140,7 @@ color:#bbb;
 
 <body>
 
-<div class="glitch">lryxar</div>
+<div class="stars"></div>
 
 <div class="card">
 
@@ -151,10 +174,15 @@ welcome to my page
 
 </div>
 
+<div class="copymsg" id="copymsg">Copied</div>
+
 <script>
 
 function copyDiscord(){
 navigator.clipboard.writeText("@l19r");
+let msg=document.getElementById("copymsg");
+msg.style.display="block";
+setTimeout(()=>{msg.style.display="none"},1500);
 }
 
 function openTiktok(){
