@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -28,8 +27,6 @@ height:100vh;
 overflow:hidden;
 }
 
-/* تعتيم الخلفية */
-
 body::before{
 content:"";
 position:fixed;
@@ -40,8 +37,6 @@ height:100%;
 background:rgba(0,0,0,0.75);
 z-index:-1;
 }
-
-/* النجوم */
 
 .stars{
 position:fixed;
@@ -57,8 +52,6 @@ z-index:-1;
 from{background-position:0 0;}
 to{background-position:8000px 4000px;}
 }
-
-/* شاشة الدخول */
 
 #intro{
 position:fixed;
@@ -80,7 +73,19 @@ font-size:14px;
 margin-top:10px;
 }
 
-/* البطاقة */
+.musicBtn{
+position:fixed;
+top:20px;
+right:20px;
+font-size:22px;
+cursor:pointer;
+opacity:0.8;
+z-index:5;
+}
+
+.musicBtn:hover{
+opacity:1;
+}
 
 .card{
 background:#050505;
@@ -91,8 +96,6 @@ width:260px;
 box-shadow:0 0 25px rgba(255,255,255,0.15);
 }
 
-/* الصورة */
-
 .avatar{
 width:90px;
 height:90px;
@@ -102,22 +105,16 @@ box-shadow:0 0 12px white;
 margin-bottom:10px;
 }
 
-/* الاسم */
-
 .name{
 font-size:24px;
 font-weight:bold;
 }
-
-/* الوصف */
 
 .bio{
 font-size:12px;
 color:#aaa;
 margin-bottom:15px;
 }
-
-/* الروابط */
 
 .link{
 background:#111;
@@ -144,28 +141,22 @@ font-size:11px;
 color:#bbb;
 }
 
-/* عداد الزوار */
-
-.visitors{
-margin-top:10px;
-font-size:11px;
-color:#aaa;
-}
-
 </style>
 
 </head>
 
 <body>
 
-<div id="intro" onclick="enterSite()">
-
+<div id="intro">
 <div>Welcome</div>
 <div class="enter">Click anywhere to enter</div>
-
 </div>
 
 <div class="stars"></div>
+
+<div class="musicBtn" onclick="toggleMusic()">
+<i id="musicIcon" class="fa-solid fa-volume-xmark"></i>
+</div>
 
 <div class="card">
 
@@ -173,7 +164,7 @@ color:#aaa;
 
 <div class="name">lryxar</div>
 
-<div class="bio"></div>
+<div class="bio">لريكسار</div>
 
 <div class="link" onclick="copyDiscord()">
 <div class="app"><i class="fa-brands fa-discord"></i> Discord</div>
@@ -195,27 +186,54 @@ color:#aaa;
 <div class="user">@t_2gq</div>
 </div>
 
-<div class="visitors" id="visits">
-Visitors: loading...
 </div>
 
-</div>
+<audio id="bgmusic" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
-/* دخول الموقع */
+let entered=false
 
-function enterSite(){
+document.getElementById("intro").addEventListener("click",function(){
+
+if(entered) return
+
+entered=true
+
 document.getElementById("intro").style.display="none"
+
+let music=document.getElementById("bgmusic")
+
+music.play()
+
+document.getElementById("musicIcon").className="fa-solid fa-volume-high"
+
+})
+
+function toggleMusic(){
+
+let music=document.getElementById("bgmusic")
+let icon=document.getElementById("musicIcon")
+
+if(music.paused){
+
+music.play()
+icon.className="fa-solid fa-volume-high"
+
+}else{
+
+music.pause()
+icon.className="fa-solid fa-volume-xmark"
+
 }
 
-/* نسخ الديسكورد */
+}
 
 function copyDiscord(){
 navigator.clipboard.writeText("@l19r")
 }
-
-/* الروابط */
 
 function openTiktok(){
 window.open("https://www.tiktok.com/@lryxar7")
@@ -228,51 +246,6 @@ window.open("https://www.youtube.com/@lryxar")
 function openInstagram(){
 window.open("https://www.instagram.com/t_2gq")
 }
-
-/* عداد الزوار */
-
-const LIMIT=3
-
-let visits=localStorage.getItem("visit_count")||0
-visits=parseInt(visits)
-
-function showVisitors(){
-fetch("https://api.countapi.xyz/get/lryxar/visits")
-.then(res=>res.json())
-.then(data=>{
-document.getElementById("visits").innerText="Visitors: "+data.value
-})
-}
-
-fetch("https://api.ipify.org?format=json")
-.then(res=>res.json())
-.then(data=>{
-
-let ip=data.ip
-let savedIP=localStorage.getItem("user_ip")
-
-if(savedIP!==ip){
-localStorage.setItem("user_ip",ip)
-localStorage.setItem("visit_count",0)
-visits=0
-}
-
-if(visits<LIMIT){
-
-fetch("https://api.countapi.xyz/hit/lryxar/visits")
-.then(res=>res.json())
-.then(data=>{
-document.getElementById("visits").innerText="Visitors: "+data.value
-})
-
-visits++
-localStorage.setItem("visit_count",visits)
-
-}else{
-showVisitors()
-}
-
-})
 
 </script>
 
